@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Login & Reset</title>
+</head>
+<body>
+
+  <h2>Login</h2>
+  <form>
+    <label>Username</label><br>
+    <input type="text" required><br><br>
+
+    <label>Password</label><br>
+    <input type="password" required><br>
+
+    <a href="#reset">Forgot Password?</a><br><br>
+
+    <button type="submit">Login</button>
+  </form>
+
+  <h2 id="reset">Reset Password</h2>
+  <form>
+    <label>Email</label><br>
+    <input type="email" placeholder="example@domain.com" required><br><br>
+
+    <label>New Password</label><br>
+    <input type="password" id="new-password" oninput="checkStrength()" required><br>
+
+    <div>
+      <progress id="strength-bar" value="0" max="100"></progress><br>
+      <small id="strength-text"></small>
+    </div><br>
+
+    <label>Confirm Password</label><br>
+    <input type="password" required><br><br>
+
+    <button type="submit">Reset</button>
+  </form>
+
+  <script>
+    function checkStrength() {
+      const pwd = document.getElementById("new-password").value;
+      const bar = document.getElementById("strength-bar");
+      const text = document.getElementById("strength-text");
+
+      let strength = 0;
+      if (pwd.length >= 8) strength++;
+      if (/[A-Z]/.test(pwd)) strength++;
+      if (/[a-z]/.test(pwd)) strength++;
+      if (/[0-9]/.test(pwd)) strength++;
+      if (/[^A-Za-z0-9]/.test(pwd)) strength++;
+
+      const percent = strength * 20;
+      bar.value = percent;
+
+      if (strength <= 2) text.textContent = "Weak";
+      else if (strength <= 4) text.textContent = "Medium";
+      else text.textContent = "Strong";
+    }
+  </script>
+
+</body>
+</html>
